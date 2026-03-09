@@ -138,7 +138,7 @@ function renderPosts(posts, container) {
         card.style.animationDelay = `${index * 0.1}s`;
 
         // The stored date is UTC, Javascript handles that when ‘Z’ is appended. SQLite CURRENT_TIMESTAMP is UTC
-        const date = new Date(post.created_at + 'Z'); 
+        const date = new Date(post.created_at); 
         const formattedDate = date.toLocaleString('es-ES', { 
             dateStyle: 'long', 
             timeStyle: 'short' 
