@@ -37,6 +37,7 @@ async function initDB() {
                 media_url TEXT,
                 media_type TEXT,
                 news_link TEXT,
+                news_source TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `);
@@ -186,7 +187,7 @@ app.delete('/api/gallery/:id', async (req, res) => {
 
 // POST /api/posts - Create a new post
 app.post('/api/posts', upload.single('media'), async (req, res) => {
-    const { title, content, created_at, news_link } = req.body;
+    const { title, content, created_at, news_link, news_source } = req.body;
     let mediaUrl = null;
     let mediaType = null;
 
@@ -204,11 +205,11 @@ app.post('/api/posts', upload.single('media'), async (req, res) => {
 
         let sql, params;
         if (created_at) {
-            sql = `INSERT INTO posts (title, content, media_url, media_type, news_link, created_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`;
-            params = [title, content, mediaUrl, mediaType, news_link || null, created_at];
+            sql = `INSERT INTO posts (title, content, media_url, media_type, news_link, news_source, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`;
+            params = [title, content, mediaUrl, mediaType, news_link || null, news_source || null, created_at];
         } else {
-            sql = `INSERT INTO posts (title, content, media_url, media_type, news_link) VALUES ($1, $2, $3, $4, $5) RETURNING id`;
-            params = [title, content, mediaUrl, mediaType, news_link || null];
+            sql = `INSERT INTO posts (title, content, media_url, media_type, news_link, news_source) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`;
+            params = [title, content, mediaUrl, mediaType, news_link || null, news_source || null];
         }
 
         const dbResult = await pool.query(sql, params);
@@ -233,7 +234,7 @@ app.post('/api/posts', upload.single('media'), async (req, res) => {
 // PUT /api/posts/:id - Update an existing post
 app.put('/api/posts/:id', upload.single('media'), async (req, res) => {
     const id = req.params.id;
-    const { title, content, created_at, news_link } = req.body;
+    const { title, content, created_at, news_link, news_source } = req.body;
     let mediaUrl = null;
     let mediaType = null;
 
@@ -249,9 +250,9 @@ app.put('/api/posts/:id', upload.single('media'), async (req, res) => {
             mediaUrl = uploadResult.secure_url;
         }
 
-        const params = [title, content, news_link || null];
-        let paramCount = 4;
-        let sql = `UPDATE posts SET title = $1, content = $2, news_link = $3`;
+        const params = [title, content, news_link || null, news_source || null];
+        let paramCount = 5;
+        let sql = `UPDATE posts SET title = $1, content = $2, news_link = $3, news_source = $4`;
 
         if (created_at) {
             sql += `, created_at = $${paramCount++}`;
