@@ -42,6 +42,11 @@
                 </div>
                 
                 <div class="form-group">
+                    <label for="news_source">Nombre del Medio Oficial (Opcional)</label>
+                    <input type="text" id="news_source" class="form-control" placeholder="Ej: El Comercio, Facebook, RPP...">
+                </div>
+                
+                <div class="form-group">
                     <label for="media">Adjuntar Foto o Video (Opcional)</label>
                     <input type="file" id="media" accept="image/*,video/*">
                 </div>
@@ -79,9 +84,23 @@
                     <input type="text" id="gallery-description" placeholder="Añade un texto breve a la imagen" maxlength="150">
                 </div>
                 
-                <button type="submit" class="btn" id="gallery-submit-btn" style="background: #eab308; color: #000;">Subir a Galería</button>
-                <div id="gallery-status-message"></div>
+                <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+                    <button type="submit" class="btn" id="gallery-submit-btn" style="background: #eab308; color: #000; flex: 1;">Subir a Galería</button>
+                    <button type="button" class="btn" id="cancel-gallery-edit-btn" style="background: var(--text-secondary); flex: 1; display: none;">Cancelar Edición</button>
+                </div>
+                <div id="gallery-status-message" style="margin-top: 1rem;"></div>
             </form>
+        </div>
+
+        <div class="admin-container" style="margin-top: 2rem;" id="manage-gallery-section">
+            <h2>Gestión de Galería</h2>
+            <p style="color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem;">Edita o elimina fotos del carrusel.</p>
+            <div id="gallery-list-admin">
+                <div class="loader">
+                    <div class="spinner"></div>
+                    <p>Cargando galería...</p>
+                </div>
+            </div>
         </div>
     </main>
 
