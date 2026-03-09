@@ -83,7 +83,7 @@ const uploadToCloudinary = (fileBuffer, resourceType = 'auto') => {
 // GET /api/posts - Fetch all posts
 app.get('/api/posts', async (req, res) => {
     try {
-        const result = await pool.query("SELECT * FROM posts ORDER BY created_at ASC");
+        const result = await pool.query("SELECT * FROM posts ORDER BY created_at DESC");
         res.json({
             "message": "success",
             "data": result.rows
