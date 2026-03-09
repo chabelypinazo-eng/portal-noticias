@@ -135,6 +135,55 @@ app.post('/api/gallery', upload.single('image'), async (req, res) => {
     }
 });
 
+// PUT /api/gallery/:id - Update an existing gallery image/description
+app.put('/api/gallery/:id', upload.single('image'), async (req, res) => {
+    const id = req.params.id;
+    const description = req.body.description || null;
+    let imageUrl = null;
+
+    try {
+        if (req.file) {
+            if (!req.file.mimetype.startsWith('image/')) {
+                return res.status(400).json({ "error": "Solo se permiten imágenes." });
+            }
+            const uploadResult = await uploadToCloudinary(req.file.buffer, 'image');
+            imageUrl = uploadResult.secure_url;
+        }
+
+        const params = [description];
+        let paramCount = 2;
+        let sql = `UPDATE gallery SET description = $1`;
+
+        if (imageUrl) {
+            sql += `, image_url = $${paramCount++}`;
+            params.push(imageUrl);
+        }
+
+        sql += ` WHERE id = $${paramCount}`;
+        params.push(id);
+
+        await pool.query(sql, params);
+        
+        res.json({
+            "message": "success",
+            "data": { id, image_url: imageUrl, description: description }
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(400).json({ "error": err.message || "Error interno" });
+    }
+});
+
+// DELETE /api/gallery/:id - Delete a gallery image
+app.delete('/api/gallery/:id', async (req, res) => {
+    try {
+        const result = await pool.query(`DELETE FROM gallery WHERE id = $1`, [req.params.id]);
+        res.json({ "message": "deleted", changes: result.rowCount });
+    } catch (err) {
+        res.status(400).json({ "error": err.message });
+    }
+});
+
 // POST /api/posts - Create a new post
 app.post('/api/posts', upload.single('media'), async (req, res) => {
     const { title, content, created_at, news_link } = req.body;
