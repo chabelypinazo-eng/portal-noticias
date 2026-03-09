@@ -137,11 +137,11 @@ function renderPosts(posts, container) {
         // Add staggering animation delay
         card.style.animationDelay = `${index * 0.1}s`;
 
-        // The stored date is UTC, Javascript handles that when ‘Z’ is appended. SQLite CURRENT_TIMESTAMP is UTC
+        // The date from PostgreSQL is already parsed into a valid ISO string by the driver
         const date = new Date(post.created_at); 
         const formattedDate = date.toLocaleString('es-ES', { 
             dateStyle: 'long', 
-            timeStyle: 'short' 
+            timeStyle: 'short'  
         });
 
         // Media section
@@ -162,9 +162,10 @@ function renderPosts(posts, container) {
         
         let linkHtml = '';
         if (post.news_link) {
+            const sourceName = post.news_source ? escapeHTML(post.news_source) : 'el Medio Oficial';
             linkHtml = `
             <div style="margin-top: 1.5rem; text-align: right;">
-                <a href="${post.news_link}" target="_blank" rel="noopener noreferrer" class="btn btn-news">Leer Noticia en el Medio Oficial &rarr;</a>
+                <a href="${post.news_link}" target="_blank" rel="noopener noreferrer" class="btn btn-news">Leer Noticia en ${sourceName} &rarr;</a>
             </div>`;
         }
 
