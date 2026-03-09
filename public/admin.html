@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar Actualización - Búsqueda</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="alert-banner" style="background: rgba(0,0,0,0.5);">Panel Restringido</div>
+        <h1>Publicar Nueva Actualización</h1>
+        <p style="color: var(--text-secondary)">Añade nueva información vital sobre la búsqueda.</p>
+        <nav>
+            <a href="/">&larr; Volver al Inicio</a>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="admin-container">
+            <h2>Crear Nueva Noticia</h2>
+            <form id="post-form">
+                <div class="form-group">
+                    <label for="title">Título</label>
+                    <input type="text" id="title" class="form-control" required placeholder="Escribe el título...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-date">Fecha y Hora de la Noticia (Opcional)</label>
+                    <input type="datetime-local" id="post-date" class="form-control">
+                    <small style="color: var(--text-secondary); display: block; margin-top: 5px;">Si se deja en blanco, se usará la fecha actual.</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="content">Contenido Completo (Descripción o Cuerpo de la Noticia)</label>
+                    <textarea id="content" class="form-control" required placeholder="Escribe aquí toda la información..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="news_link">Enlace a Noticia Externa (Opcional)</label>
+                    <input type="text" id="news_link" class="form-control" placeholder="https://ejemplo.com/noticia">
+                </div>
+                
+                <div class="form-group">
+                    <label for="media">Adjuntar Foto o Video (Opcional)</label>
+                    <input type="file" id="media" accept="image/*,video/*">
+                </div>
+                
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <button type="submit" class="btn" id="submit-btn" style="background: var(--accent); flex: 1;">Publicar Noticia Principal</button>
+                    <button type="button" class="btn" id="cancel-edit-btn" style="background: var(--text-secondary); flex: 1; display: none;">Cancelar Edición</button>
+                </div>
+                <div id="status-message" style="margin-top: 1rem;"></div>
+            </form>
+        </div>
+
+        <div class="admin-container" style="margin-top: 2rem;" id="manage-posts-section">
+            <h2>Gestión de Noticias</h2>
+            <p style="color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem;">Edita o elimina noticias previamente publicadas.</p>
+            <div id="posts-list-admin">
+                <div class="loader">
+                    <div class="spinner"></div>
+                    <p>Cargando noticias...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-container" style="margin-top: 2rem;">
+            <h2>Subir Foto a la Galería</h2>
+            <p style="color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem;">Sube fotos que se mostrarán en la galería de imágenes del caso.</p>
+            <form id="gallery-form">
+                <div class="form-group">
+                    <label for="gallery-image">Seleccionar Foto</label>
+                    <input type="file" id="gallery-image" accept="image/*" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gallery-description">Descripción (Opcional)</label>
+                    <input type="text" id="gallery-description" placeholder="Añade un texto breve a la imagen" maxlength="150">
+                </div>
+                
+                <button type="submit" class="btn" id="gallery-submit-btn" style="background: #eab308; color: #000;">Subir a Galería</button>
+                <div id="gallery-status-message"></div>
+            </form>
+        </div>
+    </main>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>
