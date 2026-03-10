@@ -1,54 +1,133 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Búsqueda - Engels Huarany Pinazo Mendoza</title>
-    <meta name="description" content="Actualizaciones sobre la búsqueda y desaparición de Engels Huarany Pinazo Mendoza en el Distrito de Megantoni.">
-    <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Engels Huarany Pinazo Mendoza desaparecido tras el naufragio de un bote - Plataforma oficial de búsqueda">
+  <title>BÚSQUEDA ENGELS | Desaparecido tras naufragio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    .hero-bg {
+      background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+                  url('https://picsum.photos/id/870/1920/1080') center/cover no-repeat;
+    }
+    .alert-pulse { animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+  </style>
 </head>
-<body>
-    <header>
-        <p class="alert-banner">🚨 ALERTA DE BÚSQUEDA 🚨</p>
-        <h1>Actualizaciones: Engels Huarany Pinazo Mendoza</h1>
-        <p>Plataforma oficial para compartir y visibilizar los avances en su búsqueda.</p>
-    <main>
-        <!-- Thank You Sidebar (Moved to left side) -->
-        <aside class="thank-you-sidebar">
-            <div class="sidebar-content">
-                <h3>Agradecimiento Especial</h3>
-                <p>Nuestra familia quiere expresar su más profundo agradecimiento a todos los voluntarios, autoridades, amigos y personas de gran corazón que nos están apoyando incansablemente en esta búsqueda.</p>
-                <p><strong>Su ayuda mantiene viva nuestra esperanza.</strong></p>
-            </div>
-        </aside>
+<body class="bg-zinc-950 text-white font-sans">
 
-        <div class="main-content">
-            <!-- Photo Gallery Section -->
-        <section class="gallery-section">
-            <h2 class="section-title">Galería de Fotos</h2>
-            <div class="carousel-wrapper">
-                <button class="carousel-btn prev-btn" id="prev-btn" aria-label="Anterior">&lsaquo;</button>
-                <div class="carousel-container" id="gallery-container">
-                    <!-- Gallery images will be injected here -->
-                </div>
-                <button class="carousel-btn next-btn" id="next-btn" aria-label="Siguiente">&rsaquo;</button>
-            </div>
-            <div class="carousel-dots" id="carousel-dots"></div>
-        </section>
+  <!-- NAVBAR -->
+  <nav class="bg-black sticky top-0 z-50 border-b border-red-600">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <i class="fas fa-search text-red-600 text-3xl"></i>
+        <h1 class="text-2xl font-bold tracking-wider">BÚSQUEDA ENGELS</h1>
+      </div>
+      <div class="hidden md:flex gap-8 text-lg">
+        <a href="#" class="hover:text-red-500 transition">Inicio</a>
+        <a href="#galeria" class="hover:text-red-500 transition">Galería</a>
+        <a href="#actualizaciones" class="hover:text-red-500 transition">Actualizaciones</a>
+        <a href="#ayudar" class="hover:text-red-500 transition">Cómo ayudar</a>
+      </div>
+      <button onclick="share()" class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-2xl font-medium flex items-center gap-2 transition">
+        <i class="fas fa-share"></i> Compartir
+      </button>
+    </div>
+  </nav>
 
-        <!-- Main Updates Feed -->
-        <section class="updates-section">
-            <h2 class="section-title">Últimas Actualizaciones</h2>
-            <div id="posts-container">
-                <div class="loader">
-                    <div class="spinner"></div>
-                    <p>Cargando noticias...</p>
-                </div>
-            </div>
-        </section>
-        </div> <!-- End of main-content -->
-    </main>
+  <!-- HERO -->
+  <header class="hero-bg h-screen flex items-center justify-center text-center">
+    <div class="max-w-5xl px-6">
+      <div class="inline-block bg-red-600 text-white text-sm font-bold px-8 py-3 rounded-full mb-8 alert-pulse">
+        🚨 ALERTA DE BÚSQUEDA ACTIVA 🚨
+      </div>
+      <h1 class="text-5xl md:text-7xl font-black leading-none mb-4">ENGELS HUARANY<br>PINAZO MENDOZA</h1>
+      <p class="text-2xl md:text-3xl text-red-400 mb-10">Desaparecido tras el naufragio de un bote</p>
+      <p class="max-w-2xl mx-auto text-xl text-zinc-300 mb-12">
+        Plataforma oficial para visibilizar y avanzar en su búsqueda
+      </p>
+      <div class="flex flex-col sm:flex-row gap-6 justify-center">
+        <a href="#actualizaciones" class="bg-white text-black font-bold px-12 py-5 rounded-3xl text-xl hover:scale-105 transition">Ver actualizaciones</a>
+        <a href="#galeria" class="border-2 border-white font-bold px-12 py-5 rounded-3xl text-xl hover:bg-white hover:text-black transition">Ver fotos</a>
+      </div>
+    </div>
+  </header>
 
-    <script src="/js/main.js"></script>
+  <!-- QUÉ SUCEDIÓ -->
+  <section class="py-16 bg-zinc-900">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold mb-8">Qué sucedió</h2>
+      <div class="bg-zinc-950 p-10 rounded-3xl border border-zinc-800">
+        <p class="text-xl text-zinc-300 leading-relaxed">
+          Engels Huarany Pinazo Mendoza se perdió tras el naufragio de un bote.<br>
+          <strong>Cualquier información es clave para encontrarlo.</strong><br>
+          Reporta inmediatamente al 105 o a la familia.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section id="galeria" class="py-20 bg-black">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-12">Galería de fotos</h2>
+      <div id="gallery-container" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Render from main.js -->
+        <div class="w-full rounded-3xl text-center py-10 text-zinc-500" style="grid-column: 1 / -1;">Cargando fotos...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTUALIZACIONES -->
+  <section id="actualizaciones" class="py-20 bg-zinc-950">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-12">Últimas actualizaciones</h2>
+      <div id="posts-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Render from main.js -->
+        <div class="w-full text-center py-10 text-zinc-500" style="grid-column: 1 / -1;">Cargando actualizaciones...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO AYUDAR -->
+  <section id="ayudar" class="py-20 bg-zinc-900">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+      <div>
+        <h2 class="text-4xl font-bold mb-10">¿Cómo puedes ayudar?</h2>
+        <ul class="space-y-8 text-lg">
+          <li class="flex gap-5"><i class="fas fa-share text-red-600 text-3xl"></i> Comparte esta página en WhatsApp, Facebook e Instagram</li>
+          <li class="flex gap-5"><i class="fas fa-phone text-red-600 text-3xl"></i> Reporta cualquier información al 105 o al número de la familia</li>
+          <li class="flex gap-5"><i class="fas fa-hands-helping text-red-600 text-3xl"></i> Únete a las brigadas de búsqueda en la zona del naufragio</li>
+        </ul>
+      </div>
+      <div class="bg-zinc-950 p-10 rounded-3xl border border-red-900">
+        <p class="text-3xl font-bold text-red-400 leading-tight">"Cualquier detalle puede ser la clave para encontrarlo y traerlo de vuelta a casa"</p>
+        <p class="mt-10 text-zinc-400">— Familia Pinazo Mendoza</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-black py-12 border-t border-zinc-800">
+    <div class="max-w-7xl mx-auto px-6 text-center text-zinc-500 text-sm">
+      <p>© 2026 Plataforma de Búsqueda Engels Huarany Pinazo Mendoza • Hecho con ❤️ para que vuelva a casa</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    function share() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Búsqueda Engels - Desaparecido tras naufragio',
+          url: window.location.href
+        });
+      } else {
+        alert('Copia este enlace y compártelo: ' + window.location.href);
+      }
+    }
+  </script>
 </body>
 </html>
