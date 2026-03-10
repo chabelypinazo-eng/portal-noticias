@@ -3,6 +3,23 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchGallery();
 });
 
+async function fetchGallery() {
+    const container = document.getElementById('gallery-container');
+    
+    try {
+        const response = await fetch('/api/gallery');
+        const result = await response.json();
+        
+        if (result.message === 'success') {
+            renderGallery(result.data, container);
+        } else {
+            container.innerHTML = `<p class="col-span-1 md:col-span-3 text-center text-red-500">Error al cargar galería.</p>`;
+        }
+    } catch (error) {
+        console.error("Fetch gallery error:", error);
+    }
+}
+
 function renderGallery(images, container) {
     if (images.length === 0) {
         container.innerHTML = `<p style="color: var(--text-secondary); text-align: center; width: 100%; padding: 2rem; grid-column: 1 / -1;">No hay fotos recientes.</p>`;
