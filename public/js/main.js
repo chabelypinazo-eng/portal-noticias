@@ -3,103 +3,29 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchGallery();
 });
 
-let currentSlide = 0;
-let totalSlides = 0;
-
-async function fetchGallery() {
-    const container = document.getElementById('gallery-container');
-    
-    try {
-        const response = await fetch('/api/gallery');
-        const result = await response.json();
-        
-        if (result.message === 'success') {
-            renderGallery(result.data, container);
-        } else {
-            container.innerHTML = `<p style="color: var(--error);">Error al cargar galería.</p>`;
-        }
-    } catch (error) {
-        console.error("Fetch gallery error:", error);
-    }
-}
-
 function renderGallery(images, container) {
-    const dotsContainer = document.getElementById('carousel-dots');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-
     if (images.length === 0) {
-        container.innerHTML = `<p style="color: var(--text-secondary); text-align: center; width: 100%; padding: 2rem;">No hay fotos recientes.</p>`;
-        dotsContainer.style.display = 'none';
-        prevBtn.style.display = 'none';
-        nextBtn.style.display = 'none';
+        container.innerHTML = `<p style="color: var(--text-secondary); text-align: center; width: 100%; padding: 2rem; grid-column: 1 / -1;">No hay fotos recientes.</p>`;
         return;
     }
 
-    totalSlides = images.length;
     container.innerHTML = '';
-    dotsContainer.innerHTML = '';
     
-    images.forEach((img, index) => {
-        // Create slide
+    images.forEach(img => {
         const div = document.createElement('div');
-        div.className = 'gallery-item';
+        div.className = 'relative group overflow-hidden rounded-3xl shadow-2xl bg-zinc-900 border border-zinc-800 h-64 md:h-80';
         
-        let slideHTML = `<img src="${img.image_url}" alt="Foto galería" loading="lazy">`;
+        let slideHTML = `<img src="${img.image_url}" alt="Foto galería" loading="lazy" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">`;
+        
         if (img.description) {
-            slideHTML += `<div class="caption-overlay">${img.description}</div>`;
+            slideHTML += `
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6 pt-16">
+                <p class="text-white font-medium drop-shadow-lg">${escapeHTML(img.description)}</p>
+            </div>`;
         }
         
         div.innerHTML = slideHTML;
         container.appendChild(div);
-
-        // Create dot
-        const dot = document.createElement('div');
-        dot.className = `dot ${index === 0 ? 'active' : ''}`;
-        dot.addEventListener('click', () => goToSlide(index));
-        dotsContainer.appendChild(dot);
-    });
-
-    if (totalSlides <= 1) {
-        prevBtn.style.display = 'none';
-        nextBtn.style.display = 'none';
-        dotsContainer.style.display = 'none';
-    } else {
-        prevBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide > 0) ? currentSlide - 1 : totalSlides - 1;
-            updateCarousel();
-        });
-        
-        nextBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide < totalSlides - 1) ? currentSlide + 1 : 0;
-            updateCarousel();
-        });
-
-        // Auto slide every 5 seconds
-        setInterval(() => {
-            currentSlide = (currentSlide < totalSlides - 1) ? currentSlide + 1 : 0;
-            updateCarousel();
-        }, 5000);
-    }
-}
-
-function goToSlide(index) {
-    currentSlide = index;
-    updateCarousel();
-}
-
-function updateCarousel() {
-    const container = document.getElementById('gallery-container');
-    const dots = document.querySelectorAll('.dot');
-    
-    container.style.transform = `translateX(-${currentSlide * 100}%)`;
-    
-    dots.forEach((dot, index) => {
-        if (index === currentSlide) {
-            dot.classList.add('active');
-        } else {
-            dot.classList.remove('active');
-        }
     });
 }
 
@@ -125,58 +51,59 @@ async function fetchPosts() {
 
 function renderPosts(posts, container) {
     if (posts.length === 0) {
-        container.innerHTML = `<p style="text-align: center; color: var(--text-secondary); padding: 3rem;">No hay noticias publicadas aún.</p>`;
+        container.innerHTML = `<p style="text-align: center; color: #a1a1aa; padding: 3rem; grid-column: 1 / -1;">No hay noticias publicadas aún.</p>`;
         return;
     }
 
     container.innerHTML = ''; // Clear loader
     
     posts.forEach((post, index) => {
-        const card = document.createElement('article');
-        card.className = 'post-card';
-        // Add staggering animation delay
-        card.style.animationDelay = `${index * 0.1}s`;
+        const card = document.createElement('div');
+        card.className = 'bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-800 hover:border-red-600 transition flex flex-col';
 
         // The date from PostgreSQL is already parsed into a valid ISO string by the driver
         const date = new Date(post.created_at); 
-        const formattedDate = date.toLocaleString('es-ES', { 
-            dateStyle: 'long', 
-            timeStyle: 'short'  
-        });
+        const formattedDate = date.toLocaleDateString('es-ES', { 
+            day: '2-digit', month: 'short', year: 'numeric'
+        }).toUpperCase();
 
         // Media section
         let mediaHtml = '';
         if (post.media_url) {
             if (post.media_type === 'image') {
-                mediaHtml = `<div class="post-media"><img src="${post.media_url}" alt="Adjunto" loading="lazy"></div>`;
+                mediaHtml = `<div class="h-48 md:h-56 bg-zinc-800 w-full"><img src="${post.media_url}" alt="Adjunto" loading="lazy" class="w-full h-full object-cover"></div>`;
             } else if (post.media_type === 'video') {
                 mediaHtml = `
-                <div class="post-media">
-                    <video controls preload="metadata">
+                <div class="h-48 md:h-56 bg-zinc-800 w-full">
+                    <video controls preload="metadata" class="w-full h-full object-cover">
                         <source src="${post.media_url}" type="video/mp4">
-                        Tu navegador no soporta videos.
                     </video>
                 </div>`;
             }
+        } else {
+             // Fallback icon like the tailwind template
+             const icons = ['📍', '🌊', '📢', '🚨', 'ℹ️'];
+             const randomIcon = icons[index % icons.length];
+             mediaHtml = `<div class="h-48 md:h-56 bg-zinc-800 flex items-center justify-center text-6xl shadow-inner">${randomIcon}</div>`;
         }
         
         let linkHtml = '';
         if (post.news_link) {
             const sourceName = post.news_source ? escapeHTML(post.news_source) : 'el Medio Oficial';
-            linkHtml = `
-            <div style="margin-top: 1.5rem; text-align: right;">
-                <a href="${post.news_link}" target="_blank" rel="noopener noreferrer" class="btn btn-news">Leer Noticia en ${sourceName} &rarr;</a>
-            </div>`;
+            linkHtml = `<a href="${post.news_link}" target="_blank" rel="noopener noreferrer" class="inline-block mt-6 text-red-500 font-medium hover:text-red-400 transition">Leer Noticia en ${sourceName} &rarr;</a>`;
         }
 
+        const title = escapeHTML(post.title);
+        const content = escapeHTML(post.content);
+
         card.innerHTML = `
-            <div class="post-header">
-                <h3 class="post-title">${escapeHTML(post.title)}</h3>
-                <div class="post-meta">${formattedDate}</div>
-            </div>
-            <div class="post-content">${escapeHTML(post.content)}</div>
             ${mediaHtml}
-            ${linkHtml}
+            <div class="p-8 flex-1 flex flex-col">
+                <span class="text-red-500 text-sm font-bold tracking-wider">${formattedDate}</span>
+                <h3 class="text-2xl font-bold mt-3 leading-tight">${title}</h3>
+                <p class="text-zinc-400 mt-4 flex-1 whitespace-pre-wrap">${content}</p>
+                ${linkHtml}
+            </div>
         `;
         
         container.appendChild(card);
