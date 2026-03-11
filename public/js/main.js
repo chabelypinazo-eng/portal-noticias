@@ -97,11 +97,6 @@ function renderPosts(posts, container) {
                     </video>
                 </div>`;
             }
-        } else {
-             // Fallback icon like the tailwind template
-             const icons = ['📍', '🌊', '📢', '🚨', 'ℹ️'];
-             const randomIcon = icons[index % icons.length];
-             mediaHtml = `<div class="h-48 md:h-56 bg-zinc-800 flex items-center justify-center text-6xl shadow-inner">${randomIcon}</div>`;
         }
         
         let linkHtml = '';
