@@ -56,27 +56,19 @@
   </header>
 
   <!-- BARRA DE ESTADÍSTICAS --->
-  <div class="bg-red-600 border-y border-red-700 w-full py-8">
-    <div class="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-white">
+  <div class="bg-red-600 border-y border-red-700 w-full py-10">
+    <div class="max-w-5xl mx-auto px-6 text-center text-white flex justify-center">
       <div>
-        <div class="text-4xl md:text-5xl font-black mb-1" id="days-counter">...</div>
-        <div class="text-sm font-bold tracking-widest text-red-200">DÍAS EN BÚSQUEDA</div>
-      </div>
-      <div>
-        <div class="text-4xl md:text-5xl font-black mb-1">24/7</div>
-        <div class="text-sm font-bold tracking-widest text-red-200">MONITOREO ACTIVO</div>
-      </div>
-      <div class="flex flex-col items-center justify-center">
-        <div class="text-3xl md:text-4xl font-black bg-white text-red-600 px-4 py-1 rounded-xl mb-1 drop-shadow-lg">SOS</div>
-        <div class="text-sm font-bold tracking-widest text-red-200">URGENTE</div>
+        <div class="text-6xl md:text-8xl font-black mb-2 drop-shadow-md" id="days-counter">...</div>
+        <div class="text-lg md:text-xl font-bold tracking-widest text-red-200">DÍAS EN BÚSQUEDA</div>
       </div>
     </div>
   </div>
 
   <script>
     // CAMBIAR ESTA FECHA POR EL DÍA EXACTO DE LA DESAPARICIÓN
-    // Formato: "AÑO-MES-DIA" (Ej: "2026-03-05")
-    const dateOfDisappearance = new Date("2026-03-05T00:00:00"); 
+    // Formato: "AÑO-MES-DIA" (Ej: "2026-03-01")
+    const dateOfDisappearance = new Date("2026-03-01T00:00:00"); 
     
     // Cálculo automático de días
     const currentDate = new Date();
