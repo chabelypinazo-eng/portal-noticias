@@ -55,6 +55,40 @@
     </div>
   </header>
 
+  <!-- BARRA DE ESTADÍSTICAS --->
+  <div class="bg-red-600 border-y border-red-700 w-full py-8">
+    <div class="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-white">
+      <div>
+        <div class="text-4xl md:text-5xl font-black mb-1" id="days-counter">...</div>
+        <div class="text-sm font-bold tracking-widest text-red-200">DÍAS EN BÚSQUEDA</div>
+      </div>
+      <div>
+        <div class="text-4xl md:text-5xl font-black mb-1">24/7</div>
+        <div class="text-sm font-bold tracking-widest text-red-200">MONITOREO ACTIVO</div>
+      </div>
+      <div class="flex flex-col items-center justify-center">
+        <div class="text-3xl md:text-4xl font-black bg-white text-red-600 px-4 py-1 rounded-xl mb-1 drop-shadow-lg">SOS</div>
+        <div class="text-sm font-bold tracking-widest text-red-200">URGENTE</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // CAMBIAR ESTA FECHA POR EL DÍA EXACTO DE LA DESAPARICIÓN
+    // Formato: "AÑO-MES-DIA" (Ej: "2026-03-05")
+    const dateOfDisappearance = new Date("2026-03-05T00:00:00"); 
+    
+    // Cálculo automático de días
+    const currentDate = new Date();
+    const timeDifference = currentDate - dateOfDisappearance;
+    let daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    
+    // Si la fecha configurada es en el futuro o es hoy (0 días), mostrar "1" para no decir "0 días"
+    if (daysPassed < 1) daysPassed = 1; 
+
+    document.getElementById('days-counter').innerText = daysPassed;
+  </script>
+
   <!-- QUÉ SUCEDIÓ -->
   <section class="py-16 bg-zinc-900">
     <div class="max-w-4xl mx-auto px-6 text-center">
